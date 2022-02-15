@@ -8,7 +8,6 @@ def afficher(M):
             print("%*s" %(w[j],str(M[i][j])), end= ' ')
         print()
 
-
 def extraireColonne(A,j):
     p=len(A[0])
     col=[]
@@ -28,7 +27,6 @@ def transvect(A,i1,i2;lamda):
       A[i][c1]=A[i][c1]+A[i][c2]*lamda
   
 def permut(A, c1, c2):
-    afficher(A)
     n,p=dimension(A)
     col1=extraireColonne(A, c1)
     col2=extraireColonne(A, c2)
