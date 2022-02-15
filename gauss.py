@@ -27,5 +27,17 @@ def transvect(A,i1,i2;lamda):
   for i in range (n):
       A[i][c1]=A[i][c1]+A[i][c2]*lamda
   
-  
+def permut(A, c1, c2):
+    afficher(A)
+    n,p=dimension(A)
+    col1=extraireColonne(A, c1)
+    col2=extraireColonne(A, c2)
+    memory=col1
+    col1=col2
+    col2=memory
+    for i in range (n):
+        A[i][c1]=col1[i]
+        A[i][c2]=col2[i]
+    afficher(A)
+
     
