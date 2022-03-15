@@ -50,8 +50,9 @@ def transvect(A,i1,i2,landa):
 
 def permut(A,i1,i2):
     A[i1],A[i2]=A[i2],A[i1]
-    afficher(A)
+    #afficher(A)
 
+A=[[1,2,3],[4,5,6]]
 
 def solution_triangulaire(A,B):
     n,n=dimension(A)
@@ -74,15 +75,6 @@ def solve(A,B):
                 B[j][0]*=landa
     return solution_triangulaire(A,B)
 
-def pivotMax(A,c):
-    n=len(A)
-    i_max = c
-    for i in range(c+1,n):
-        if abs(A[i][c]) > abs(A[i_max][c]):
-            i_max = i
-    return i_max
-
-
 def gauss(M):
     n,p=dimension(M)
     for i in range(n):
@@ -92,14 +84,22 @@ def gauss(M):
                 transvect(M,j,i,landa)
     return M
 
+def pivotMax(A,c):
+    n=len(A)
+    i_max = c
+    for i in range(c+1,n):
+        if abs(A[i][c]) > abs(A[i_max][c]):
+            i_max = i
+    return i_max
+
 def gauss2(M):
     n,p=dimension(M)
     for i in range(n):
         k = pivotMax(M,i)
-        if i > k:
-            permut(M,i,k)
-        for j in range(i+1,p):
-            if int(M[i][i])!=0:
+        permut(M,i,k)
+        for j in range(i+1,p-1):
+            if M[i][i]!=0 and M[i][i]!=0.0:
+
                 landa = -(M[j][i]/M[i][i])
                 transvect(M,j,i,landa)
     return M
@@ -118,5 +118,6 @@ def solve2(A,B):
     return solution_triangulaire(A,B)
 
 M = [[0,1,1,2],[1,0,0,1],[0,1,0,1]]
-
-afficher(gauss2(M))
+N = [[0,1,1,2],[1,0,0,1],[0,1,0,1]]
+K=[[10e-10,1],[1,1]]
+L=[[1],[2]]
