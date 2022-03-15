@@ -23,7 +23,8 @@ def dimension(A):
 def colle(A,B):
     n,p = dimension(B)
     for i in range(n):
-        A[i].append(B[i][0])
+        for j in range(n):
+            A[i].append(B[i][j])
 
     print("Matrice collée :")
     afficher(A)
@@ -58,12 +59,24 @@ def permut(A,i1,i2):
 def gauss(M):
     p,q = dimension(M)
     for i in range(p):
-        print("Étape", i)
         for j in range(i+1,p):
             l = -(M[j][i]//M[i][i])
             transvect(M,j,i,l)
-        afficher(M)
 
-M = [[1,-1,-4,13,1],[-1,2,6,-21,-1],[2,-1,-4,12,2],[2,0,-2,5,2]]
+def SolutionTriangulaire(A,B):
+    n, p = dimension(A)
+    colle(A,B)
+    for i in range(p-1,-1,-1):
+        print("i = ", i)
+        for j in range(i-1,-1,-1):
+            print("j = ", j)
+            l = -(A[j][i]//A[i][i])
+            transvect(A,j,i,l)
+            afficher(A)
+
+M = [[1,-1,-4,13],[-1,2,6,-21],[2,-1,-4,12],[2,0,-2,5]]
+B = [[1, 2, 3, 4],[5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16]]
+I = [[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]]
 
 gauss(M)
+SolutionTriangulaire(M,I)
