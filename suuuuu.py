@@ -48,24 +48,10 @@ def transvect(A,i1,i2,landa):
     for i in range(p):
         A[i1][i] += (A[i2][i])*landa
 
-
-
 def permut(A,i1,i2):
     A[i1],A[i2]=A[i2],A[i1]
     afficher(A)
 
-def gauss(M):
-    for j in range(len(M)):
-        for i in range(j+1,len(M[0])):
-            if int(M[j][j])!=0:
-                landa=-(M[i][j]/M[j][j])
-                transvect(M,i,j,landa)
-    return M
-
-
-
-M = [[1,3,1],[5,4,1],[1,2,1]]
-P = [[1],[1],[1]]
 
 def solution_triangulaire(A,B):
     n,n=dimension(A)
@@ -79,40 +65,58 @@ def solution_triangulaire(A,B):
     return X
 
 def solve(A,B):
-    for j in range(len(A)):
-        for i in range(j+1,len(A[0])):
-            if int(A[j][j])!=0:
-                landa=-(A[i][j]/A[j][j])
-                transvect(A,i,j,landa)
-                B[i][0]*=landa
+    n,p=dimension(A)
+    for i in range(n):
+        for j in range(i+1,p):
+            if A[i][i]!=0 and A[i][i]!=0:
+                landa=-(A[j][i]/A[i][i])
+                transvect(A,j,i,landa)
+                B[j][0]*=landa
     return solution_triangulaire(A,B)
 
-def pivotMax(A,i):
-    i_max = i
-    for j in range(i+1,len(A)):
-        if abs(A[j][i]) > abs(A[i_max][i]):
-            i_max = j
+def pivotMax(A,c):
+    n=len(A)
+    i_max = c
+    for i in range(c+1,n):
+        if abs(A[i][c]) > abs(A[i_max][c]):
+            i_max = i
     return i_max
 
+
 def gauss(M):
-    for j in range(len(M)):
-        for i in range(j+1,len(M[0])):
-            if int(M[j][j])!=0:
-                landa=-(M[i][j]/M[j][j])
-                transvect(M,i,j,landa)
+    n,p=dimension(M)
+    for i in range(n):
+        for j in range(i+1,p):
+            if M[i][i]!=0.0 and M[i][i]!=0:
+                landa=-(M[j][i]/M[i][i])
+                transvect(M,j,i,landa)
     return M
-    
+
 def gauss2(M):
-    for j in range(len(M)):
-        k = pivotMax(M,j)
-        if j > k:
-            permut(M,j,k)
-        for i in range(j+1,len(M[0])):
-            if int(M[j][j])!=0:
-                landa = -(M[i][j]/M[j][j])
-                transvect(M,i,j,landa)
+    n,p=dimension(M)
+    for i in range(n):
+        k = pivotMax(M,i)
+        if i > k:
+            permut(M,i,k)
+        for j in range(i+1,p):
+            if int(M[i][i])!=0:
+                landa = -(M[j][i]/M[i][i])
+                transvect(M,j,i,landa)
     return M
+
+def solve2(A,B):
+    n,p=dimension(A)
+    for i in range(n):
+        k = pivotMax(A,i)
+        if i > k:
+            permut(A,i,k)
+        for j in range(i+1,p):
+            if A[i][i]!=0.0 and A[i][i]!=0:
+                landa = -(A[j][i]/A[i][i])
+                transvect(A,j,i,landa)
+                B[j][0]*=landa
+    return solution_triangulaire(A,B)
+
+M = [[0,1,1,2],[1,0,0,1],[0,1,0,1]]
 
 afficher(gauss2(M))
-
-
