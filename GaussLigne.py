@@ -47,8 +47,6 @@ def transvect(A,i1,i2,landa):
     n,p = dimension(A)
     for i in range(p):
         A[i1][i] += (A[i2][i])*landa
-    
-    afficher(A)
 
 def permut(A,i1,i2):
     echange = A[i1]
@@ -57,7 +55,15 @@ def permut(A,i1,i2):
     
     afficher(A)
 
-M = [[1,2,3],[4,5,6],[7,8,9]]
-P = [[10],[11],[12]]
+def gauss(M):
+    p,q = dimension(M)
+    for i in range(p):
+        print("Étape", i)
+        for j in range(i+1,p):
+            l = -(M[j][i]//M[i][i])
+            transvect(M,j,i,l)
+        afficher(M)
 
-permut(M,0,1)
+M = [[1,-1,-4,13,1],[-1,2,6,-21,-1],[2,-1,-4,12,2],[2,0,-2,5,2]]
+
+gauss(M)
