@@ -1,4 +1,5 @@
 from random import randrange
+from traceback import extract_tb
 
 def afficher(M):
     "Affiche une matrice en respectant les alignements par colonnes"
@@ -23,11 +24,10 @@ def dimension(A):
 def colle(A,B):
     n,p = dimension(B)
     for i in range(n):
-        for j in range(n):
-            A[i].append(B[i][j])
+        for j in range(p):
+            A[i].append(B[i][0])
 
-    print("Matrice collée :")
-    afficher(A)
+    return(A)
 
 def decolle(M):
     P = []
@@ -39,10 +39,7 @@ def decolle(M):
         for j in range(p-1):
             Q[i].append(M[i][j])
     
-    print("\nGrande matrice:")
-    afficher(Q)
-    print("\nPetite matrice:")
-    afficher(P)
+    return Q,P
 
 def transvect(A,i1,i2,landa):
     n,p = dimension(A)
@@ -60,23 +57,39 @@ def gauss(M):
     p,q = dimension(M)
     for i in range(p):
         for j in range(i+1,p):
-            l = -(M[j][i]//M[i][i])
+            l = -(M[j][i]/M[i][i])
             transvect(M,j,i,l)
+    
+    return(M)
 
 def SolutionTriangulaire(A,B):
-    n, p = dimension(A)
+    n,p = dimension(A)
+    x = [0 for i in range(n)]
+    x[n-1] = B[n-1][0]/A[n-1][n-1]
+    for i in range(n-2,-1,-1):
+        s = 0
+        for j in range(i+1,n):
+            s = s + A[i][j] * x[j]
+            x[i] = (B[i][0] - s) / A[i][i]
+    return x
+
+def solve(A,B):
     colle(A,B)
-    for i in range(p-1,-1,-1):
-        print("i = ", i)
-        for j in range(i-1,-1,-1):
-            print("j = ", j)
-            l = -(A[j][i]//A[i][i])
-            transvect(A,j,i,l)
-            afficher(A)
+    gauss(A)
+    decolle(A)
+    A,B = decolle(A)
+    return SolutionTriangulaire(A,B)
 
-M = [[1,-1,-4,13],[-1,2,6,-21],[2,-1,-4,12],[2,0,-2,5]]
-B = [[1, 2, 3, 4],[5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16]]
-I = [[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]]
+"""def pivotMax(A,i):
+    n,p = dimension(A)
+    maxi = A[i][0]
+    i_max = 0
+    for j in range(p):
+        if A[i][j] > maxi:
+            maxi = A[i][j]
+            i_max = j
+    return i_max"""
 
-gauss(M)
-SolutionTriangulaire(M,I)
+
+M = [[1,3,1], [5,4,1], [1,2,1]]
+B = [[1], [1], [2]]
