@@ -8,10 +8,14 @@ def transvect2(A,i1,i2,landa):
 def gauss2(M):
     n,p=dimension(M)
     for i in range(n):
+
         for j in range(i+1,p):
             if M[i][i]!=0 and M[i][i]!=0.0:
                 landa = -(M[j][i]/M[i][i])
                 transvect2(M,j,i,landa)
+            afficher(M)
+            print()
+    afficher(M)
     return M
 
 def produitIteratif(A):
@@ -29,8 +33,10 @@ def produitRecursif(A):
     B=[[A[i][j] for j in range(n)] for i in range(n)]
     return s*produitRecursif(B)
 
-#B=[[1,2,0,-1],[2,0,1,1],[3,1,0,1],[2,-1,1,0]]
+B=[[1,2,0,-1],[2,0,1,1],[3,1,0,1],[2,-1,1,0]]
 #afficher(gauss2(B))
 
-C=[[-2,2,1,2],[2,1,2,2],[2,-2,-2,1],[1,0,-2,-1]]
-print(produitIteratif(gauss2(C)))
+C=[[-2,2,1,2],[2,1,2,2],[2,-2,-2,2],[1,0,-2,-1]]
+k=gauss2(C)
+
+print(produitIteratif(k))
